@@ -1,0 +1,16 @@
+project:
+  type: website
+
+subtitle: "Exercise 11 --- PMAP 8551/4551, Spring 2026"
+author: "Tykeyah Pearson"
+date: "2026-04-06"
+date-format: "long"
+
+site:
+  title: "Penguin Dashboard"
+  navbar:
+    right:
+      - text: "Dashboard"
+        href: dashboard.qmd
+      - text: "About"
+        href: about.qmd

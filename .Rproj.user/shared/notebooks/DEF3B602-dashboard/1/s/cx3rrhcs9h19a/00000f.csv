@@ -1,0 +1,6 @@
+"0","p <- ggplot(penguins, aes(x = bill_dep, y = bill_len, color = species)) +"
+"0","  geom_point(size = 3) +"
+"0","  scale_color_manual(values = c(""darkorange"", ""purple"", ""cyan4"")) +"
+"0","  theme_light()"
+"0",""
+"0","ggplotly(p)"

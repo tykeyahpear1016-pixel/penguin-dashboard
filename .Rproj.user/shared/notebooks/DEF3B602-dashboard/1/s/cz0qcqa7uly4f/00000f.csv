@@ -1,0 +1,8 @@
+"0","species_box <- ggplot() +"
+"0","  geom_text(aes(0,0,label=paste(""Penguin Species\n"", num_species)), "
+"0","            size=8, fontface=""bold"") +"
+"0","  theme_void() +"
+"0","  theme(plot.background = element_rect(fill=""#ffe5db"", color=NA))"
+"0",""
+"0","species_box"
+"0",""

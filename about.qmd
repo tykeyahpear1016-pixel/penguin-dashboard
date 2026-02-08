@@ -1,0 +1,30 @@
+---
+title: "About"
+format: html
+---
+
+# About This Site
+
+Welcome! This is a Quarto dashboard project for **PMAP 8551/4551, Spring 2026**.
+
+Here, you can explore penguin data from **Palmer Station, Antarctica**, interactive plots, and maps.
+
+------------------------------------------------------------------------
+
+## Fun Fact
+
+Did you know that **Adelie penguins** can dive up to 175 meters underwater? 🐧
+
+------------------------------------------------------------------------
+
+## Play with the Data
+
+You can even make a tiny interactive plot here:
+
+\`\`\`{r} library(plotly)
+
+# Count penguins by island
+
+island_counts \<- penguins %\>% group_by(island) %\>% summarise(count = n())
+
+plot_ly(island_counts, x = \~island, y = \~count, type = "bar", color = \~island)

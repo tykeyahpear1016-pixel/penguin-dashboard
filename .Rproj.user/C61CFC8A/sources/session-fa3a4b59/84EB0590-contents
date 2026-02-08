@@ -1,0 +1,36 @@
+---
+title: "Tasks 1 & 2: Interactive plots"
+toc: true
+---
+
+## Task 1: Session check-in
+
+Three interesting or exciting things:
+
+1. Learning how to turn regular ggplots into interactive plots using Plotly.
+2. Seeing how tooltips can display custom information when hovering over points.
+3. Understanding how to combine multiple variables into one label.
+
+Three muddy or unclear things:
+
+1. How to format tooltip labels correctly without getting confused by paste/glue.
+2. When to use aes versus putting arguments outside of it.
+3. How shapes and colors are assigned automatically versus manually.
+
+---
+
+## Task 2: Interactive plot
+
+```{r setup}
+#| warning: false
+#| message: false
+
+# Load necessary libraries
+library(tidyverse)
+library(plotly)
+library(palmerpenguins)
+
+# Load and clean dataset
+penguins <- palmerpenguins::penguins |> 
+  drop_na(sex)
+

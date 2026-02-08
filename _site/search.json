@@ -1,0 +1,128 @@
+[
+  {
+    "objectID": "interactive-plots.html",
+    "href": "interactive-plots.html",
+    "title": "Tasks 1 & 2: Interactive plots",
+    "section": "",
+    "text": "Three interesting or exciting things:\n\nLearning how to turn regular ggplots into interactive plots using Plotly.\nSeeing how tooltips can display custom information when hovering over points.\nUnderstanding how to combine multiple variables into one label.\n\nThree muddy or unclear things:\n\nHow to format tooltip labels correctly without getting confused by paste/glue.\nWhen to use aes versus putting arguments outside of it.\nHow shapes and colors are assigned automatically versus manually."
+  },
+  {
+    "objectID": "interactive-plots.html#task-1-session-check-in",
+    "href": "interactive-plots.html#task-1-session-check-in",
+    "title": "Tasks 1 & 2: Interactive plots",
+    "section": "",
+    "text": "Three interesting or exciting things:\n\nLearning how to turn regular ggplots into interactive plots using Plotly.\nSeeing how tooltips can display custom information when hovering over points.\nUnderstanding how to combine multiple variables into one label.\n\nThree muddy or unclear things:\n\nHow to format tooltip labels correctly without getting confused by paste/glue.\nWhen to use aes versus putting arguments outside of it.\nHow shapes and colors are assigned automatically versus manually."
+  },
+  {
+    "objectID": "interactive-plots.html#task-2-interactive-plot",
+    "href": "interactive-plots.html#task-2-interactive-plot",
+    "title": "Tasks 1 & 2: Interactive plots",
+    "section": "Task 2: Interactive plot",
+    "text": "Task 2: Interactive plot\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.6\n✔ forcats   1.0.1     ✔ stringr   1.6.0\n✔ ggplot2   4.0.1     ✔ tibble    3.3.0\n✔ lubridate 1.9.4     ✔ tidyr     1.3.2\n✔ purrr     1.2.0     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nlibrary(plotly)\n\n\nAttaching package: 'plotly'\n\nThe following object is masked from 'package:ggplot2':\n\n    last_plot\n\nThe following object is masked from 'package:stats':\n\n    filter\n\nThe following object is masked from 'package:graphics':\n\n    layout\n\n# Technically this isn't necessary; you can run `penguins` and start using it \n# right away since it's a core dataset. This code just puts the dataset in the \n# environment panel so it's easier to see what's in there.\npenguins &lt;- datasets::penguins\n\n# 11 rows are missing data on penguin sex, so we drop them\npenguins &lt;- penguins |&gt; \n  drop_na(sex)\n\n\npenguins &lt;- penguins |&gt; \n  mutate(\n    label = paste0(\n      species, \" (\", sex, \" on \", island, \")\\n\",\n      \"Bill depth: \", round(bill_dep, 1), \" mm\\n\",\n      \"Bill length: \", round(bill_len, 1), \" mm\"\n    )\n  )\n\n\nhead(penguins$label)\n\n[1] \"Adelie (male on Torgersen)\\nBill depth: 18.7 mm\\nBill length: 39.1 mm\"  \n[2] \"Adelie (female on Torgersen)\\nBill depth: 17.4 mm\\nBill length: 39.5 mm\"\n[3] \"Adelie (female on Torgersen)\\nBill depth: 18 mm\\nBill length: 40.3 mm\"  \n[4] \"Adelie (female on Torgersen)\\nBill depth: 19.3 mm\\nBill length: 36.7 mm\"\n[5] \"Adelie (male on Torgersen)\\nBill depth: 20.6 mm\\nBill length: 39.3 mm\"  \n[6] \"Adelie (female on Torgersen)\\nBill depth: 17.8 mm\\nBill length: 38.9 mm\"\n\n\n\npenguin_plot &lt;- ggplot(\n  penguins,\n  aes(\n    x = bill_len,\n    y = bill_dep,\n    color = species,\n    shape = species,\n    text = label\n  )\n) +\n  geom_point(size = 3) +\n  scale_color_manual(values = c(\"darkorange\", \"purple\", \"cyan4\")) +\n  theme_light() +\n  labs(\n    x = \"Bill length (mm)\",\n    y = \"Bill depth (mm)\",\n    color = \"Species\",\n    shape = \"Species\"\n  )\n\npenguin_plot\n\n\n\n\n\n\n\n\n\nggplotly(penguin_plot, tooltip = \"text\")"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Exercise 11: Interactivity",
+    "section": "",
+    "text": "Artwork by @allison_horst"
+  },
+  {
+    "objectID": "index.html#meet-the-palmer-penguins",
+    "href": "index.html#meet-the-palmer-penguins",
+    "title": "Exercise 11: Interactivity",
+    "section": "",
+    "text": "Artwork by @allison_horst"
+  },
+  {
+    "objectID": "index.html#data-description",
+    "href": "index.html#data-description",
+    "title": "Exercise 11: Interactivity",
+    "section": "Data description",
+    "text": "Data description\nThis data for this exercise comes from Dr. Kristen Gorman and her team of researchers at Palmer Station, Antarctica, and it contains information on 344 penguins across three different Antarctic islands. The data was originally published in 2020 as the {palmerpenguins} package by Allison Horst and Alison Hill. Since then, it has become incredibly popular as a teaching and demonstration dataset, and starting with R version 4.5, it is included as one of R’s core built-in datasets as penguins.\nThere are 8 columns:\n\n\n\nVariable\nDefinition\n\n\n\n\nspecies\nSpecies\n\n\nisland\nIsland\n\n\nbill_len\nBill length (mm)\n\n\nbill_dep\nBill depth (mm)\n\n\nflipper_len\nFlipper length (mm)\n\n\nbody_mass\nWeight (g)\n\n\nsex\nSex\n\n\nyear\nStudy year\n\n\n\n\n\n\n\n\n\nImportantColumn names before R 4.5\n\n\n\nThis exercise assumes that you’re using R version 4.5+, which includes penguins automatically. If you’re using an older version of R, install the {palmerpenguins} package and change the code in the different tasks to this:\npenguins &lt;- palmerpenguins::penguins\nFour of the column names in the older {palmerpenguins} data differ from the built-in names:\n\n\n\ndataset::penguins (R 4.5+)\npalmerpenguins::penguins\n\n\n\n\nbill_len\nbill_length_mm\n\n\nbill_dep\nbill_depth_mm\n\n\nflipper_len\nflipper_length_mm\n\n\nbody_mass\nbody_mass_g"
+  },
+  {
+    "objectID": "index.html#bill-length-and-bill-depth",
+    "href": "index.html#bill-length-and-bill-depth",
+    "title": "Exercise 11: Interactivity",
+    "section": "Bill length and bill depth",
+    "text": "Bill length and bill depth\nHere’s what bill length and bill depth refer to:\n\n\n\nArtwork by @allison_horst"
+  },
+  {
+    "objectID": "interactive-plots-clean.html",
+    "href": "interactive-plots-clean.html",
+    "title": "interactive-plots.qmd",
+    "section": "",
+    "text": "# Setup chunk — run this first\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.6\n✔ forcats   1.0.1     ✔ stringr   1.6.0\n✔ ggplot2   4.0.1     ✔ tibble    3.3.0\n✔ lubridate 1.9.4     ✔ tidyr     1.3.2\n✔ purrr     1.2.0     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nlibrary(plotly)\n\n\nAttaching package: 'plotly'\n\nThe following object is masked from 'package:ggplot2':\n\n    last_plot\n\nThe following object is masked from 'package:stats':\n\n    filter\n\nThe following object is masked from 'package:graphics':\n\n    layout\n\nlibrary(palmerpenguins)\n\n\nAttaching package: 'palmerpenguins'\n\nThe following objects are masked from 'package:datasets':\n\n    penguins, penguins_raw\n\npenguins &lt;- palmerpenguins::penguins |&gt; \n  drop_na(sex)\n\n\nhead(penguins)\n\n# A tibble: 6 × 8\n  species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g\n  &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;\n1 Adelie  Torgersen           39.1          18.7               181        3750\n2 Adelie  Torgersen           39.5          17.4               186        3800\n3 Adelie  Torgersen           40.3          18                 195        3250\n4 Adelie  Torgersen           36.7          19.3               193        3450\n5 Adelie  Torgersen           39.3          20.6               190        3650\n6 Adelie  Torgersen           38.9          17.8               181        3625\n# ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;\n\nnames(penguins)\n\n[1] \"species\"           \"island\"            \"bill_length_mm\"   \n[4] \"bill_depth_mm\"     \"flipper_length_mm\" \"body_mass_g\"      \n[7] \"sex\"               \"year\"             \n\n\n\nlibrary(glue)\n\npenguins_labeled &lt;- penguins |&gt; \n  mutate(\n    label = glue(\n      \"{species} ({sex} on {island} Island)\\n\",\n      \"Bill depth: {bill_depth_mm} mm\\n\",\n      \"Bill length: {bill_length_mm} mm\"\n    )\n  )\n\npenguins_plot &lt;- ggplot(\n  penguins_labeled,\n  aes(\n    x = bill_length_mm,\n    y = bill_depth_mm,\n    color = species,\n    shape = species,\n    text = label\n  )\n) +\n  geom_point(size = 3) +\n  scale_color_manual(values = c(\"darkorange\", \"purple\", \"cyan4\")) +\n  theme_light() +\n  labs(\n    x = \"Bill length (mm)\",\n    y = \"Bill depth (mm)\",\n    color = \"Species\",\n    shape = \"Species\"\n  )\n\nggplotly(penguins_plot, tooltip = \"text\")"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "Welcome! This is a Quarto dashboard project for PMAP 8551/4551, Spring 2026.\nHere, you can explore penguin data from Palmer Station, Antarctica, interactive plots, and maps.\n\n\n\nDid you know that Adelie penguins can dive up to 175 meters underwater? 🐧\n\n\n\n\nYou can even make a tiny interactive plot here:\n```{r} library(plotly)"
+  },
+  {
+    "objectID": "about.html#fun-fact",
+    "href": "about.html#fun-fact",
+    "title": "About",
+    "section": "",
+    "text": "Did you know that Adelie penguins can dive up to 175 meters underwater? 🐧"
+  },
+  {
+    "objectID": "about.html#play-with-the-data",
+    "href": "about.html#play-with-the-data",
+    "title": "About",
+    "section": "",
+    "text": "You can even make a tiny interactive plot here:\n```{r} library(plotly)"
+  },
+  {
+    "objectID": "instructions.html",
+    "href": "instructions.html",
+    "title": "Instructions",
+    "section": "",
+    "text": "WarningTHIS IS DIFFERENT!!!\n\n\n\nThis exercise is different from all your past work! That’s on purpose! Only HTML output can handle interactivity and dashboards—PDFs and Word files are static document formats that don’t allow Javascript."
+  },
+  {
+    "objectID": "instructions.html#quarto-websites",
+    "href": "instructions.html#quarto-websites",
+    "title": "Instructions",
+    "section": "Quarto websites",
+    "text": "Quarto websites\nIn this exercise, you’re going to create a whole Quarto website and publish it on the internet. That might sound intimidating and hard, but don’t worry! Thanks to Quarto, it should be fairly straightforward.\nIn addition to the regular single standalone Quarto documents you’ve been making all semester, Quarto can make websites.\n\n\n\n\n\n\nNoteBonus materials!\n\n\n\nI have a whole workshop website on making Quarto websites if you’re interested in making more official websites like a personal website or a website for a research project or event. Check out all the slides and materials there to learn more.\n\n\nQuarto websites are collections of multiple .qmd files that you stitch together into one combined website. There are very few differences between what you’ve done so far this semester with single .qmd files and what you’ll do here with multiple .qmd files. You’ll type text and run R chunks in different .qmd files that I’ve given you.\nThe main new thing here is a file named _quarto.yml, which controls how the website is built and what pages show up in the navigation bar. I’ve given you a _quarto.yml file already—you only need to change your name and the date. It looks like this:\n\n\n_quarto.yml\n\nproject:\n  type: website\n\nsubtitle: \"Exercise 11 --- PMAP 8551/4551, Spring 2026\"\nauthor: \"Tykeyah Pearson\"\ndate: \"2026-04-06\"\ndate-format: \"long\"\n\nsite:\n  title: \"Penguin Dashboard\"\n  navbar:\n    right:\n      - text: \"Dashboard\"\n        href: dashboard.qmd\n      - text: \"About\"\n        href: about.qmd\n\nIt tells Quarto to (1) treat this whole project as a website, (2) use your name and a date and a subtitle, and (3) put a top navigation bar with a specific background color with links to a few different .qmd files. That’s it!\nEach of those .qmd files are regular normal Quarto files."
+  },
+  {
+    "objectID": "instructions.html#rendering-and-previewing-quarto-website-pages",
+    "href": "instructions.html#rendering-and-previewing-quarto-website-pages",
+    "title": "Instructions",
+    "section": "Rendering and previewing Quarto website pages",
+    "text": "Rendering and previewing Quarto website pages\nDO NOT try to write everything in your Quarto files, render once at the end, and be done. With interactive plots—and especially with dashboards—it’s best to see what they look like in a web browser.\nYou should be rendering a lot. Follow this general workflow:\n\n\nEven with your regular standalone Quarto files, you should be rendering a lot, checking the results to make sure (1) the document looks clean without extra warnings and messages, and (2) your images are sized the way you want them to be.\n\n\n\n\n\nTo preview the Quarto document you’re working on, render it like normal using the “Render” button at the top of the editor:\n\n\n\n\n\n…or with keyboard shortcuts:\n\n\n\n\n\n\n\nmacOS\nWindows\n\n\n\n\n⌘⇧K\nCtrl + Shift + K\n\n\n\nTo preview the whole site, use the “Render Website” button in the Build panel (or run quarto preview in the Terminal panel):\n\n\n\n\n\nIt’s probably easiest to not preview the page in Viewer panel in RStudio because it’s kind of small. Click on the arrow icon in the top corner of that panel to open the previewed page in your web browser:"
+  },
+  {
+    "objectID": "instructions.html#tasks-1-and-2-interactive-plots",
+    "href": "instructions.html#tasks-1-and-2-interactive-plots",
+    "title": "Instructions",
+    "section": "Tasks 1 and 2: Interactive plots",
+    "text": "Tasks 1 and 2: Interactive plots\nYou’ll do Task 1 (your check-in) and Task 2 (a recreation of an interactive plot) in the file named interactive-plots.qmd. Open that file in RStudio and follow the instructions there.\nFor Task 2 you will recreate an interactive plot (also accessible in the navigation bar at the top as “Tasks 1 and 2”)."
+  },
+  {
+    "objectID": "instructions.html#task-3-dashboard",
+    "href": "instructions.html#task-3-dashboard",
+    "title": "Instructions",
+    "section": "Task 3: Dashboard",
+    "text": "Task 3: Dashboard\nYou’ll do Task 3 (making a basic dashboard) in the file named dashboard.qmd.\nQuarto dashboards are incredibly powerful and flexible and you can make a lot of neat things with them! But it’s impossible to cover how to do everything. The best way to learn them is to play around with them and explore all the different features and options.\nFor this task you will recreate this dashboard (also accessible in the navigation bar at the top as “Task 3”).\nYou’ll need to skim through and explore the documentation for Quarto Dashboards here. In particular, these two sections will be helpful:\n\nDashboard Layout\nData Display\n\nTo make the value boxes:\n\nRefer to the Quarto dashboard documentation for Value Boxes.\nFind the names for different icons at Bootstrap Icons.\nThe colors for the two value boxes are #d1f0ff (light blue) and #ffe5db (light red).\n\nSince the focus of that task is on making the structure of a dashboard and less about writing R code, I’ve given you the code for two of the dashboard elements here:\n\n\n\n\n\n\nCautionInteractive map\n\n\n\n(If R complains about the leaflet package not being found, install it.)\n```{r}\n#| title: \"Palmer Station, Antarctica\"\npalmer_coords &lt;- list(lng = -64.053, lat = -64.774)\n\nleaflet() |&gt;\n  addTiles() |&gt;\n  setView(\n    lng = palmer_coords$lng,\n    lat = palmer_coords$lat, \n    zoom = 16\n  ) |&gt; \n  addMarkers(\n    lng = palmer_coords$lng,\n    lat = palmer_coords$lat, \n    popup = \"Home of the famous penguins\"\n  )\n```\n\n\n\n\n\n\n\n\nCautionInteractive plot\n\n\n\n```{r}\n#| title: \"Bill length and bill depth\"\np &lt;- ggplot(penguins, aes(x = bill_dep, y = bill_len, color = species)) +\n  geom_point() +\n  scale_color_manual(values = c(\"darkorange\", \"purple\", \"cyan4\")) +\n  theme_light()\n\nggplotly(p)\n```"
+  },
+  {
+    "objectID": "instructions.html#task-4-extension",
+    "href": "instructions.html#task-4-extension",
+    "title": "Instructions",
+    "section": "Task 4: Extension",
+    "text": "Task 4: Extension\nCreate a new .qmd file, make something in it, and add it to the navigation bar for your website. Do whatever you want here. This is just to give a chance to play with some other Quarto features (like, maybe try making an About Page).\nIf you’re super brave, check out Quarto Live or Observable JS for super advanced interactivity. Or just do something simple. Whatever you want! Learn something cool!"
+  },
+  {
+    "objectID": "instructions.html#publishing-the-site-and-submitting-to-icollege",
+    "href": "instructions.html#publishing-the-site-and-submitting-to-icollege",
+    "title": "Instructions",
+    "section": "Publishing the site and submitting to iCollege",
+    "text": "Publishing the site and submitting to iCollege\nYou will not upload a rendered PDF or Word file to iCollege. Instead, you’ll submit a link to your website.\nHere’s how to do it:\n\nGo to quartopub.com and create a free account. Make sure you’re logged in in your main browser.\nIn the Terminal panel in RStudio, run this:\n\n\nTerminal\n\nquarto publish\n\nSometimes RStudio might not have an open Terminal panel. If you don’t see the Terminal panel down by the console, go to View &gt; Move Focus to Terminal and it’ll open a terminal for you.\nSelect Quarto Pub and press enter. Answer all the other questions. Press enter to select each different option.\nWait for the site to render and upload. Here’s a little (soundless) video showing the whole process:\n\n\n  \n\n\n(Note! In that video I chose “Use another account” for the “Publish with account” option. You don’t have to do that! That was just so I could trigger the browser-based authentication window for the video. Ordinarily, once you set this up, you won’t have to authenticate again and you can just tell it to use your already-authenticated account.)\nAt the end of the process you’ll see the URL of your published site in the terminal, like this:\n\n\nTerminal\n\n...\n[✓] Preparing to publish site\n[✓] Uploading files (complete)\n[✓] Deploying published site\n[✓] Published site: https://andrewheiss.quarto.pub/my-super-cool-site-or-whatever\n\nCopy that URL and visit it in your browser. That’s your website!\nYou can view your Quarto Pub account page later to manage the site (like changing its URL or deleting the page, etc.)\nIn iCollege, paste the URL of your website into the submission form for Exercise 11.\nYou’re done!\n\n\n\n\n\n\n\nNoteUpdating your site\n\n\n\nIf you make changes to your website later, you can update the live version by running quarto publish again. It’ll go a lot faster after the first time because you won’t have to answer all the different initial questions—it should just render and upload right away."
+  }
+]

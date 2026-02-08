@@ -1,0 +1,58 @@
+---
+title: "interactive-plots.qmd"
+format: html
+editor: visual
+---
+
+```{r}
+# Setup chunk — run this first
+library(tidyverse)
+library(plotly)
+library(palmerpenguins)
+
+penguins <- palmerpenguins::penguins |> 
+  drop_na(sex)
+
+```
+
+```{r}
+head(penguins)
+names(penguins)
+
+```
+
+```{r}
+library(glue)
+
+penguins_labeled <- penguins |> 
+  mutate(
+    label = glue(
+      "{species} ({sex} on {island} Island)\n",
+      "Bill depth: {bill_depth_mm} mm\n",
+      "Bill length: {bill_length_mm} mm"
+    )
+  )
+
+penguins_plot <- ggplot(
+  penguins_labeled,
+  aes(
+    x = bill_length_mm,
+    y = bill_depth_mm,
+    color = species,
+    shape = species,
+    text = label
+  )
+) +
+  geom_point(size = 3) +
+  scale_color_manual(values = c("darkorange", "purple", "cyan4")) +
+  theme_light() +
+  labs(
+    x = "Bill length (mm)",
+    y = "Bill depth (mm)",
+    color = "Species",
+    shape = "Species"
+  )
+
+ggplotly(penguins_plot, tooltip = "text")
+
+```

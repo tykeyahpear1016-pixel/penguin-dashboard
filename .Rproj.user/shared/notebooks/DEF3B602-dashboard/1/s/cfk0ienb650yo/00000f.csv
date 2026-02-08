@@ -1,0 +1,13 @@
+"0","#| layout: row"
+"0","#| fig-cap: false"
+"0",""
+"0","# Value Box 1 - Light Blue"
+"0","qvaluebox("
+"0","  value = nrow(penguins),          # Number of penguins"
+"0","  caption = ""Penguins in Dataset"",  # Text below number"
+"0","  icon = ""people-fill"",             # Bootstrap icon name"
+"0","  color = ""#d1f0ff""                 # Light blue background"
+"0",")"
+"2","Error in qvaluebox(value = nrow(penguins), caption = ""Penguins in Dataset"",  : 
+  could not find function ""qvaluebox""
+"

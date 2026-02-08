@@ -1,0 +1,85 @@
+---
+title: "Tasks 1 & 2: Interactive plots"
+toc: true
+---
+
+## Task 1: Session check-in
+
+Three interesting or exciting things:
+
+1. Learning how to turn regular ggplots into interactive plots using Plotly.
+2. Seeing how tooltips can display custom information when hovering over points.
+3. Understanding how to combine multiple variables into one label.
+
+Three muddy or unclear things:
+
+1. How to format tooltip labels correctly without getting confused by paste/glue.
+2. When to use aes versus putting arguments outside of it.
+3. How shapes and colors are assigned automatically versus manually.
+
+---
+
+## Task 2: Interactive plot
+
+```{r}
+library(tidyverse)
+library(plotly)
+
+# Technically this isn't necessary; you can run `penguins` and start using it 
+# right away since it's a core dataset. This code just puts the dataset in the 
+# environment panel so it's easier to see what's in there.
+penguins <- datasets::penguins
+
+# 11 rows are missing data on penguin sex, so we drop them
+penguins <- penguins |> 
+  drop_na(sex)
+```
+
+```{r}
+penguins <- penguins |> 
+  mutate(
+    label = paste0(
+      species, " (", sex, " on ", island, ")\n",
+      "Bill depth: ", round(bill_dep, 1), " mm\n",
+      "Bill length: ", round(bill_len, 1), " mm"
+    )
+  )
+
+
+```
+
+```{r}
+head(penguins$label)
+
+```
+
+```{r}
+penguin_plot <- ggplot(
+  penguins,
+  aes(
+    x = bill_len,
+    y = bill_dep,
+    color = species,
+    shape = species,
+    text = label
+  )
+) +
+  geom_point(size = 3) +
+  scale_color_manual(values = c("darkorange", "purple", "cyan4")) +
+  theme_light() +
+  labs(
+    x = "Bill length (mm)",
+    y = "Bill depth (mm)",
+    color = "Species",
+    shape = "Species"
+  )
+
+penguin_plot
+
+```
+
+```{r}
+ggplotly(penguin_plot, tooltip = "text")
+
+```
+

@@ -1,0 +1,76 @@
+---
+title: "Dashboard"
+format: dashboard
+---
+
+```{r}
+library(tidyverse)
+library(plotly)
+library(leaflet)
+library(gridExtra)
+
+penguins <- datasets::penguins |> 
+  drop_na(sex)
+
+# Values for the "boxes"
+total_penguins <- nrow(penguins)
+num_species <- n_distinct(penguins$species)
+
+
+```
+
+```{r}
+# Create a "value box" as a colored ggplot
+total_box <- ggplot() +
+  geom_text(aes(0,0,label=paste("Total Penguins\n", total_penguins)), 
+            size=8, fontface="bold") +
+  theme_void() +
+  theme(plot.background = element_rect(fill="#d1f0ff", color=NA))
+
+total_box
+
+```
+
+```{r}
+species_box <- ggplot() +
+  geom_text(aes(0,0,label=paste("Penguin Species\n", num_species)), 
+            size=8, fontface="bold") +
+  theme_void() +
+  theme(plot.background = element_rect(fill="#ffe5db", color=NA))
+
+species_box
+
+```
+
+```{r}
+
+```
+
+```{r}
+p <- ggplot(penguins, aes(x = bill_dep, y = bill_len, color = species)) +
+  geom_point(size = 3) +
+  scale_color_manual(values = c("darkorange", "purple", "cyan4")) +
+  theme_light()
+
+ggplotly(p)
+
+```
+
+```{r}
+palmer_coords <- list(lng = -64.053, lat = -64.774)
+
+leaflet() |>
+  addTiles() |>
+  setView(
+    lng = palmer_coords$lng,
+    lat = palmer_coords$lat, 
+    zoom = 16
+  ) |> 
+  addMarkers(
+    lng = palmer_coords$lng,
+    lat = palmer_coords$lat, 
+    popup = "Home of the famous penguins"
+  )
+
+```
+

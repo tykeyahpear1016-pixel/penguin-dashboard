@@ -1,0 +1,20 @@
+{
+  "dashboard.qmd": {
+    "dashboard.html": "23bc0dbb"
+  },
+  "index.qmd": {
+    "index.html": "0d4a847b"
+  },
+  "instructions.qmd": {
+    "instructions.html": "bdf47bff"
+  },
+  "interactive-plots.qmd": {
+    "interactive-plots.html": "1911db1d"
+  },
+  "interactive-plots-clean.qmd": {
+    "interactive-plots-clean.html": "10880533"
+  },
+  "about.qmd": {
+    "about.html": "1834a028"
+  }
+}
